@@ -9,6 +9,19 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+const db = mysql.createConnection(
+    {
+      host: 'localhost',
+      // MySQL username,
+      user: 'root',
+      // MySQL password
+      password: 'C@rbon0104',
+      database: 'department_db'
+    },
+    console.log(`Connected to the courses_db database.`)
+  );
+  
+
 inquirer.
     prompt([
         {
