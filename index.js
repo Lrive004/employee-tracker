@@ -1,4 +1,4 @@
-const { prompt } = require("inquirer");
+const { prompt, default: inquirer } = require("inquirer");
 const express = require("express");
 const mysql = require("mysql2");
 
@@ -49,7 +49,7 @@ function main() {
           name: "Add employee",
         },
         {
-          name: "Add employee role",
+          name: "Update employee",
         },
       ],
     },
@@ -65,6 +65,10 @@ function main() {
       addDepartment();
     } else if (options === "Add role") {
       addRole();
+    } else if (options === "Add employee") {
+      addEmployee();
+    } else if (options === "Update employee") {
+      updateEmployee();
     } else {
       console.log("Something went wrong with the if statements");
     }
@@ -129,7 +133,7 @@ function addDepartment() {
           main();
           return;
         }
-        console.log("department added successfully");
+        console.log("department added successfully!");
         main();
       }
     );
@@ -180,10 +184,78 @@ function addRole() {
             main();
             return;
           }
-          console.log("role added successfully");
+          console.log("role added successfully!");
           main();
         }
       );
     });
+  });
+}
+
+function addEmployee() {
+  db.query("SELECT title, id FROM roles", (err, rolesTable) => {
+    if (err) {
+      console.log("error fetching departments from database: " + err.stack);
+      main();
+      return;
+    }
+    const employeeRoleChoices = rolesTable.map((roles) => ({
+      name: roles.title,
+      value: roles.id,
+    }));
+
+    db.query(
+      "SELECT id, first_name, last_name FROM managers",
+      (err, managersTable) => {
+        if (err) {
+          console.log("error fetching managers from database: " + err.stack);
+          main();
+          return;
+        }
+        const employeeManagerChoices = managersTable.map((managers) => ({
+          name: `${managers.first_name} ${managers.last_name}`,
+          value: managers.id,
+        }));
+
+        prompt([
+          {
+            type: "input",
+            name: "first_name",
+            message: "What is the employee's first name?",
+          },
+          {
+            type: "input",
+            name: "last_name",
+            message: "What is the employee's last name?",
+          },
+          {
+            type: "list",
+            name: "role",
+            message: "What is Enter employee's role?",
+            choices: employeeRoleChoices,
+          },
+          {
+            type: "list",
+            name: "manager",
+            message: "What manager does this employee report to?",
+            choices: employeeManagerChoices,
+          },
+        ]).then((answer) => {
+          db.query(
+            "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+            [answer.first_name, answer.last_name, answer.role, answer.manager],
+            (err, result) => {
+              if (err) {
+                console.log("error inserting into database: " + err.stack);
+                main();
+                return;
+              }
+              console.log("employee added successfully!");
+              main();
+            }
+          );
+        });
+      }
+    );
   });
 }
