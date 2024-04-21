@@ -231,7 +231,7 @@ function addEmployee() {
           {
             type: "list",
             name: "role",
-            message: "What is Enter employee's role?",
+            message: "What is the employee's role?",
             choices: employeeRoleChoices,
           },
           {
