@@ -1,5 +1,9 @@
 # Employee-Tracker
   ## A simple MySQL mock up of an employee tracker that displays, departments, current employees, salaries, roles, and managers.
+  *Future version will include the ability to update the already existing employees
+
+  <img width="284" alt="image" src="https://github.com/Lrive004/employee-tracker/assets/112648247/ce7e7da5-93f2-4276-9266-d58d3dfccc36">
+
 
   ## Table of Contents
   - [Installation](#installation)
