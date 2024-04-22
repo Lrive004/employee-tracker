@@ -24,12 +24,12 @@ VALUES ("John", "Doe"),
         ("Sarah", "Lourd");
 
 -- Populate employees
-INSERT INTO employee (first_name, last_name, role_id, department_id, salary, manager_id)
-VALUES ("John", "Doe", 1, 4, 100000, NULL),     
-        ("Mike", "Chan", 2, 4, 80000, 1),
-        ("Ashley", "Rodriguez", 3, 1, 150000, NULL),
-        ("Kevin", "Tupic", 4, 1, 120000, 2),
-        ("Kunal", "Singh", 5, 2, 160000, NULL),
-        ("Malia", "Brown", 6, 2, 125000, 3),
-        ("Sarah", "Lourd", 7, 3, 250000, NULL),
-        ("Tom", "Allen", 8, 3, 190000, 4);
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("John", "Doe", 1, NULL),     
+        ("Mike", "Chan", 2, 1),
+        ("Ashley", "Rodriguez", 3, NULL),
+        ("Kevin", "Tupic", 4, 2),
+        ("Kunal", "Singh", 5, NULL),
+        ("Malia", "Brown", 6, 3),
+        ("Sarah", "Lourd", 7, NULL),
+        ("Tom", "Allen", 8, 4);
